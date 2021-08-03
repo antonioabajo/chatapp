@@ -16,7 +16,7 @@
 
 function url(port) {
     var l = window.location;
-    return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + ':' + port + l.pathname ;
+    return ((l.protocol === "https:") ? "ws://" : "ws://") + l.hostname + ':' + port + l.pathname ;
 }
 
   function init()
