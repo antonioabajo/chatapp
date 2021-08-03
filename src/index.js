@@ -16,8 +16,10 @@ const partialsPath = path.join(__dirname,'../templates/partials')
 
 const app = express()
 const server = http.createServer(app)
-const io = socketio(server)
-
+//const io = socketio(server)
+const wss = new WebSocketServer({server},()=>{
+    console.log("WebServerSocket established")
+})
 http.createServer(app)
 
 const port = process.env.PORT || 3000
@@ -36,7 +38,7 @@ app.get('', (req, res) => {
 
 
 let count = 0;
-
+/*
 io.on('connection', (socket) => {
     console.log('New Websocket connection')
     
@@ -59,16 +61,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', ()=> {
         io.emit('countUpdated', 'User Disconnected');
     })
-})
-
-server.listen(port,()=>{
-    console.log('Server is up and port is ' + port)
-})
-
-
-const wss = new WebSocketServer({ port: 8080},()=>{
-    console.log("WebServerSocket established in port 8080")
-})
+})*/
 
 wss.on('connection',(socket)=>{
     console.log('New Connection')
@@ -78,3 +71,9 @@ wss.on('connection',(socket)=>{
         console.log('Message received',msg)
     })
 })
+
+server.listen(port,()=>{
+    console.log('Server is up and port is ' + port)
+})
+
+

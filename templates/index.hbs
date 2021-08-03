@@ -11,12 +11,12 @@
 
           <script language="javascript" type="text/javascript">
 
-  var wsUri = url(8080);
+  var wsUri = wsurl();
   var output;
 
-function url(port) {
+function wsurl(port) {
     var l = window.location;
-    return ((l.protocol === "https:") ? "ws://" : "ws://") + l.hostname + ':' + port + l.pathname ;
+    return ((l.protocol === "https:") ? "wss://" : "ws://") + l.host + l.pathname ;
 }
 
   function init()
