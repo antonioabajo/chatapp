@@ -4,15 +4,20 @@ const http = require('http')
 const hbs = require('hbs')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
+const ws = require('ws')
+const WebSocketServer = ws.Server
+
 
 const publicPath = path.join(__dirname,'../public')
 const viewsPath = path.join(__dirname,'../templates')
 const partialsPath = path.join(__dirname,'../templates/partials')
 
 
+
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
+
 http.createServer(app)
 
 const port = process.env.PORT || 3000
@@ -58,4 +63,18 @@ io.on('connection', (socket) => {
 
 server.listen(port,()=>{
     console.log('Server is up and port is ' + port)
+})
+
+
+const wss = new WebSocketServer({ port: 8080},()=>{
+    console.log("WebServerSocket established in port 8080")
+})
+
+wss.on('connection',(socket)=>{
+    console.log('New Connection')
+    socket.send("Connection Established")
+
+    socket.on('message',(msg)=>{
+        console.log('Message received',msg)
+    })
 })
